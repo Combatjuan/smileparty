@@ -62,7 +62,6 @@ func (c *Worker) listenWrite() {
 	for {
 		select {
 		case msg := <-c.ch:
-			log.Println("Send:", msg)
 			websocket.JSON.Send(c.ws, msg)
 		case <-c.doneCh:
 			c.server.Del(c)

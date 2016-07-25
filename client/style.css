@@ -1,0 +1,51 @@
+body {
+ 	background-color: rgb(0, 0, 0);
+}
+
+.frowny {
+	background-color: blue;
+	background-image: radial-gradient(circle at 50%, rgb(255,0,0) 50px, black 0px);
+	box-shadow: inset -5px -10px 10px rgb(255,255,0);
+	width: 100;
+	height: 100;
+	left: 100;
+	top: 300;
+	position: absolute
+}
+
+.smiley {
+	background-color: rgb(255, 255, 0);
+	width: 100;
+	height: 100;
+	left: 300;
+	top: 300;
+	position: absolute;
+}
+
+.lefteye {
+	position: relative;
+	left: 20;
+	top: 20;
+	width: 20;
+	height: 20;
+	background-color: #000000;
+}
+
+.righteye {
+	position: relative;
+	left: 60;
+	top: 0;
+	width: 20;
+	height: 20;
+	background-color: black;
+}
+
+.mouth {
+	position: relative;
+	left: 15;
+	width: 70;
+	top: 20;
+	height: 20;
+	background-color: #000000;
+}
+

@@ -7,7 +7,7 @@ import (
 type SmileLocation struct {
 	Id string `json:"id"`
 	X  int    `json:"x"`
-	Y  int    `json:"x"`
+	Y  int    `json:"y"`
 }
 
 func (self *SmileLocation) String() string {
