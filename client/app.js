@@ -1,6 +1,10 @@
 (function (window) {
 	$(document).ready(main);
 
+	function moveTo(o, x, y) {
+		o.css("left", String(x) + "px");
+		o.css("top", String(y) + "px");
+	}
 	function move(o, dx, dy) {
 		var x = Number(o.css("left").slice(0, -2));
 		var y = Number(o.css("top").slice(0, -2));
@@ -14,6 +18,13 @@
 			rightDown: false,
 			upDown: false,
 			downDown: false
+		};
+		var ws = new WebSocket("ws://localhost:8080/start");
+		ws.onmessage = function(e) {
+			console.log("In: " + e.data);
+			var pos = JSON.parse(e.data)
+			var bob = $("#bob");
+			moveTo(bob, pos.x, pos.y);
 		};
 		function doFrame() {
 			var alice = $("#alice");
