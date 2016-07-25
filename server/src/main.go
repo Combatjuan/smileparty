@@ -11,7 +11,7 @@ func main() {
 	log.SetFlags(log.Lshortfile)
 
 	// Websocket server
-	server := smile.NewServer("/start")
+	server := smile.NewServer()
 	go server.Listen()
 
 	// Static files
@@ -19,4 +19,3 @@ func main() {
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
-

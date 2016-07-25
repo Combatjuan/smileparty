@@ -13,10 +13,10 @@ const channelBufSize = 100
 var maxId int = 0
 
 type Worker struct {
-	id int
-	ws *websocket.Conn
+	id     int
+	ws     *websocket.Conn
 	server *Server
-	ch chan *SmileLocation
+	ch     chan *SmileLocation
 	doneCh chan bool
 }
 

@@ -1,20 +1,22 @@
 package smile
 
 import (
-	"time"
+	"golang.org/x/net/websocket"
 	"log"
 	"net/http"
-	"golang.org/x/net/websocket"
+	"time"
 )
 
 type Server struct {
-	messages []*SmileLocation
-	clients map[int]*Worker
-	addCh chan *Worker
-	delCh chan *Worker
-	sendAllCh chan *SmileLocation
-	doneCh chan bool
-	errCh chan error
+	messages    []*SmileLocation
+	clients     map[int]*Worker
+	addCh       chan *Worker
+	delCh       chan *Worker
+	sendAllCh   chan *SmileLocation
+	doneCh      chan bool
+	errCh       chan error
+	ticker      *time.Ticker
+	currentTime int
 }
 
 func NewServer() *Server {
@@ -25,9 +27,11 @@ func NewServer() *Server {
 	sendAllCh := make(chan *SmileLocation)
 	doneCh := make(chan bool)
 	errCh := make(chan error)
+	ticker := time.NewTicker(time.Second * 10)
+	var currentTime int
 
 	return &Server{
-		messages, clients, addCh, delCh, sendAllCh, doneCh, errCh,
+		messages, clients, addCh, delCh, sendAllCh, doneCh, errCh, ticker, currentTime,
 	}
 }
 
@@ -83,6 +87,13 @@ func (s *Server) Listen() {
 		case c := <-s.delCh:
 			log.Println("Delete worker")
 			delete(s.clients, c.id)
+		case <-s.ticker.C:
+			s.currentTime += 10
+			if s.currentTime > 1000 {
+				s.currentTime = 0
+			}
+			s.sendAll(&SmileLocation{"tick", s.currentTime, s.currentTime})
+			log.Println("Tick.")
 		case msg := <-s.sendAllCh:
 			log.Println("Send all:", msg)
 			s.messages = append(s.messages, msg)
@@ -94,4 +105,3 @@ func (s *Server) Listen() {
 		}
 	}
 }
-
